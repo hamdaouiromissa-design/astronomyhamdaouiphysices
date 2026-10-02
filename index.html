@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Untitled</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="/style.css">
+  </head>
+
+  <body>
+    <!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة العلوم الفيزيائية - الأستاذة حمداوي</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0284c7;
+            --secondary: #0ea5e9;
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+            --card-bg: #ffffff;
+            --text-main: #334155;
+            --text-light: #64748b;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #f8fafc;
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.7;
+        }
+
+        /* شاشة تسجيل الدخول */
+        #login-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-gradient);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .login-box {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            max-width: 420px;
+            width: 90%;
+        }
+
+        .login-box h2 {
+            color: #0f172a;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-box p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .login-box input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #cbd5e1;
+            border-radius: 10px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1rem;
+            text-align: right;
+            margin-bottom: 1rem;
+            outline: none;
+            box-sizing: border-box;
+        }
+
+        .login-btn {
+            background: linear-gradient(135deg, #0284c7, #0ea5e9);
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1rem;
+        }
+
+        .error-msg {
+            color: #ef4444;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        #app-content {
+            display: none;
+        }
+
+        header {
+            background: var(--bg-gradient);
+            color: white;
+            text-align: center;
+            padding: 2.5rem 1rem 1.5rem;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.2rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        /* لوحة تحكم الأدمن */
+        #admin-panel {
+            background: #e0f2fe;
+            border: 2px dashed var(--primary);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            display: none;
+        }
+
+        #admin-panel h3 {
+            color: #0369a1;
+            margin-top: 0;
+        }
+
+        .admin-section {
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            border: 1px solid #bae6fd;
+        }
+
+        #admin-panel input, #admin-panel select, #admin-panel textarea {
+            width: 100%;
+            padding: 0.7rem;
+            margin-bottom: 0.8rem;
+            border-radius: 8px;
+            border: 1px solid #cbd5e1;
+            font-family: 'Cairo', sans-serif;
+            box-sizing: border-box;
+            background: white;
+        }
+
+        .student-item-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f8fafc;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            margin-top: 0.4rem;
+            border: 1px solid #e2e8f0;
+        }
+
+        .delete-btn {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: 'Cairo';
+            font-size: 0.8rem;
+        }
+
+        /* الأقسام الرئيسية للسنة الدراسية */
+        .year-section-title {
+            color: #0f172a;
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 0.3rem;
+            margin-top: 2.5rem;
+            font-size: 1.6rem;
+        }
+
+        .category-box {
+            background: white;
+            border-radius: 12px;
+            padding: 1.2rem;
+            margin-top: 1rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            border: 1px solid #e2e8f0;
+        }
+
+        .category-title {
+            color: #0284c7;
+            font-size: 1.2rem;
+            margin-top: 0;
+            border-bottom: 1px solid #f1f5f9;
+            padding-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* نظام العناوين القابلة للطي (Accordion) */
+        .accordion-item {
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            margin-top: 0.8rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .accordion-header {
+            padding: 1rem 1.2rem;
+            background: #f1f5f9;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            color: #1e293b;
+        }
+
+        .accordion-header:hover {
+            background: #e2e8f0;
+        }
+
+        .accordion-body {
+            padding: 1.2rem;
+            background: white;
+            border-top: 1px solid #cbd5e1;
+            display: none;
+        }
+
+        .action-btn {
+            display: inline-block;
+            background: #10b981;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 0.8rem;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        video {
+            width: 100%;
+            max-height: 350px;
+            border-radius: 8px;
+            margin-top: 0.8rem;
+            background: #000;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: #0f172a;
+            color: #94a3b8;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- شاشة تسجيل الدخول -->
+    <div id="login-screen">
+        <div class="login-box">
+            <h2>تسجيل الدخول للمنصة</h2>
+            <p>أدخل اسم المستخدم (مثل 1s_ali أو 2s_sami):</p>
+            <input type="text" id="user-email" placeholder="اسم المستخدم...">
+            <input type="password" id="user-pass" placeholder="الكود السري...">
+            <div id="login-error" class="error-msg">معلومات الدخول غير صحيحة!</div>
+            <button class="login-btn" onclick="login()">دخول للمنصة</button>
+        </div>
+    </div>
+
+    <!-- المحتوى الرئيسي -->
+    <div id="app-content">
+        <header>
+            <h1>منصة العلوم الفيزيائية</h1>
+            <p>الأستاذة: <strong>حمداوي</strong> | <span id="user-role-badge" style="color: #38bdf8;"></span></p>
+        </header>
+
+        <div class="container">
+            <!-- لوحة تحكم الأدمن -->
+            <div id="admin-panel">
+                <h3>🛠️ لوحة تحكم الأدمن (خاصة بالأستاذة حمداوي)</h3>
+                
+                <!-- إعدادات الأدمن الشخصية -->
+                <div class="admin-section" style="background: #fef08a; border-color: #facc15;">
+                    <h4 style="color: #854d0e; margin-top: 0;">⚙️ إعدادات الحساب الشخصي (تغيير اسم المستخدم أو كلمة السر):</h4>
+                    <input type="text" id="admin-new-user" placeholder="اسم مستخدم الأدمن الجديد...">
+                    <input type="password" id="admin-new-pass" placeholder="كلمة السر الجديدة للأدمن...">
+                    <button class="login-btn" style="background: #eab308; color: #713f12;" onclick="updateAdminCredentials()">حفظ التعديلات الشخصية</button>
+                </div>
+
+                <!-- إضافة تلميذ -->
+                <div class="admin-section">
+                    <h4 style="color: #0369a1; margin-top: 0;">1. إدارة التلاميذ (تبدأ بـ 1s_ أو 2s_):</h4>
+                    <input type="text" id="new-student-user" placeholder="مثال: 1s_ahmed أو 2s_fatima">
+                    <input type="password" id="new-student-pass" placeholder="الكود السري...">
+                    <button class="login-btn" style="background: #0284c7;" onclick="addNewStudent()">إضافة التلميذ وتفعيل حسابه</button>
+                    <div style="margin-top: 10px; max-height: 130px; overflow-y: auto;" id="students-list-container"></div>
+                </div>
+
+                <!-- نشر محتوى -->
+                <div class="admin-section">
+                    <h4 style="color: #0369a1; margin-top: 0;">2. نشر محتوى جديد (تمرين / درس / تجربة مخبرية):</h4>
+                    <select id="target-level">
+                        <option value="1st">السنة الأولى ثانوي (1s)</option>
+                        <option value="2nd">السنة الثانية ثانوي (2s)</option>
+                    </select>
+
+                    <select id="target-category">
+                        <option value="lessons">📚 ملخصات الدروس</option>
+                        <option value="exercises">📝 قسم التمارين</option>
+                        <option value="lab">🔬 أعمال مخبرية وتجارب علمية</option>
+                        <option value="homework">🏠 واجبات منزلية</option>
+                    </select>
+
+                    <input type="text" id="content-title" placeholder="عنوان المحتوى (مثال: التجربة الأولى: قياس الناقلية)...">
+                    <textarea id="content-text" rows="3" placeholder="شرح تفصيلي أو ملاحظات حول التجربة..."></textarea>
+                    
+                    <label style="font-size: 0.85rem; color: #0284c7; display: block; margin-top: 5px;">اختر ملفاً (PDF، صورة) أو فيديو (MP4):</label>
+                    <input type="file" id="content-file">
+                    
+                    <button class="login-btn" onclick="publishContent()" style="margin-top: 10px;">نشر وحفظ المحتوى والفيديو</button>
+                </div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h2 style="color: #1e293b; margin: 0;">محتويات المنصة الدراسية</h2>
+                <button onclick="logout()" style="background: #ef4444; color: white; border: none; padding: 0.4rem 1rem; border-radius: 6px; cursor: pointer; font-family: 'Cairo';">تسجيل الخروج</button>
+            </div>
+
+            <!-- أقسام السنة الأولى -->
+            <div id="section-1st-wrapper">
+                <h3 class="year-section-title">📘 السنة الأولى ثانوي</h3>
+                <div class="category-box">
+                    <h4 class="category-title">📚 ملخصات الدروس</h4>
+                    <div id="content-1st-lessons"></div>
+                </div>
+                <div class="category-box">
+                    <h4 class="category-title">📝 قسم التمارين</h4>
+                    <div id="content-1st-exercises"></div>
+                </div>
+                <div class="category-box">
+                    <h4 class="category-title">🔬 أعمال مخبرية وتجارب علمية</h4>
+                    <div id="content-1st-lab"></div>
+                </div>
+                <div class="category-box">
+                    <h4 class="category-title">🏠 واجبات منزلية</h4>
+                    <div id="content-1st-homework"></div>
+                </div>
+            </div>
+
+            <!-- أقسام السنة الثانية -->
+            <div id="section-2nd-wrapper">
+                <h3 class="year-section-title">📙 السنة الثانية ثانوي</h3>
+                <div class="category-box">
+                    <h4 class="category-title">📚 ملخصات الدروس</h4>
+                    <div id="content-2nd-lessons"></div>
+                </div>
+                <div class="category-box">
+                    <h4 class="category-title">📝 قسم التمارين</h4>
+                    <div id="content-2nd-exercises"></div>
+                </div>
+                <div class="category-box">
+                    <h4 class="category-title">🔬 أعمال مخبرية وتجارب علمية</h4>
+                    <div id="content-2nd-lab"></div>
+                </div>
+                <div class="category-box">
+                    <h4 class="category-title">🏠 واجبات منزلية</h4>
+                    <div id="content-2nd-homework"></div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>جميع الحقوق محفوظة &copy; 2026 | الأستاذة حمداوي</p>
+        </footer>
+    </div>
+
+    <script>
+        let adminAccount = JSON.parse(localStorage.getItem("hamdaoui_admin")) || { 
+            email: "Prof_Hamdaoui_2026", 
+            pass: "#Physics_Secure_987!" 
+        };
+        
+        let allowedStudents = JSON.parse(localStorage.getItem("hamdaoui_students")) || [
+            { email: "1s_tann", pass: "1234" }
+        ];
+
+        let savedContent = JSON.parse(localStorage.getItem("hamdaoui_content")) || [];
+        let currentLoggedInUser = null;
+
+        window.onload = function() {
+            document.getElementById("admin-new-user").value = adminAccount.email;
+            document.getElementById("admin-new-pass").value = adminAccount.pass;
+        };
+
+        function updateAdminCredentials() {
+            const newUser = document.getElementById("admin-new-user").value.trim();
+            const newPass = document.getElementById("admin-new-pass").value.trim();
+
+            if(newUser === "" || newPass === "") {
+                alert("الرجاء عدم إبقاء الحقول فارغة!");
+                return;
+            }
+
+            adminAccount = { email: newUser, pass: newPass };
+            localStorage.setItem("hamdaoui_admin", JSON.stringify(adminAccount));
+            alert("تم تحديث بيانات حساب الأدمن بنجاح!");
+        }
+
+        function renderStudentsList() {
+            const container = document.getElementById("students-list-container");
+            container.innerHTML = "<strong>التلاميذ المسجلين:</strong>";
+            if(allowedStudents.length === 0) {
+                container.innerHTML += "<p style='font-size:0.85rem; color:#64748b; margin:4px 0;'>لا يوجد تلاميذ مسجلين حالياً.</p>";
+                return;
+            }
+            allowedStudents.forEach((s, index) => {
+                const row = document.createElement("div");
+                row.className = "student-item-row";
+                row.innerHTML = `
+                    <span>👤 ${s.email} (الكود: ${s.pass})</span>
+                    <button class="delete-btn" onclick="deleteStudent(${index})">حذف التلميذ</button>
+                `;
+                container.appendChild(row);
+            });
+        }
+
+        function addNewStudent() {
+            const username = document.getElementById("new-student-user").value.trim();
+            const pass = document.getElementById("new-student-pass").value.trim();
+
+            if (username === "" || pass === "") {
+                alert("الرجاء إدخال اسم المستخدم والكود السري!");
+                return;
+            }
+
+            if (!username.startsWith("1s_") && !username.startsWith("2s_")) {
+                alert("خطأ: يجب أن يبدأ اسم المستخدم بـ 1s_ أو 2s_!");
+                return;
+            }
+
+            if(allowedStudents.some(s => s.email === username)) {
+                alert("اسم المستخدم موجود مسبقاً!");
+                return;
+            }
+
+            allowedStudents.push({ email: username, pass: pass });
+            localStorage.setItem("hamdaoui_students", JSON.stringify(allowedStudents));
+            renderStudentsList();
+
+            document.getElementById("new-student-user").value = "";
+            document.getElementById("new-student-pass").value = "";
+            alert("تم إضافة التلميذ بنجاح!");
+        }
+
+        function deleteStudent(index) {
+            if(confirm("هل أنت متأكد من حذف هذا التلميذ؟")) {
+                allowedStudents.splice(index, 1);
+                localStorage.setItem("hamdaoui_students", JSON.stringify(allowedStudents));
+                renderStudentsList();
+            }
+        }
+
+        function login() {
+            const inputName = document.getElementById("user-email").value.trim();
+            const pass = document.getElementById("user-pass").value.trim();
+            const errorDiv = document.getElementById("login-error");
+
+            if (inputName === adminAccount.email && pass === adminAccount.pass) {
+                currentLoggedInUser = { type: "admin", email: inputName };
+                document.getElementById("login-screen").style.display = "none";
+                document.getElementById("app-content").style.display = "block";
+                document.getElementById("admin-panel").style.display = "block";
+                document.getElementById("user-role-badge").textContent = "حساب الأستاذة (أدمن)";
+                
+                document.getElementById("section-1st-wrapper").style.display = "block";
+                document.getElementById("section-2nd-wrapper").style.display = "block";
+
+                renderStudentsList();
+                renderAll();
+            } else {
+                const studentFound = allowedStudents.find(s => s.email === inputName && s.pass === pass);
+                if (studentFound) {
+                    currentLoggedInUser = { type: "student", email: inputName };
+                    document.getElementById("login-screen").style.display = "none";
+                    document.getElementById("app-content").style.display = "block";
+                    document.getElementById("admin-panel").style.display = "none";
+                    
+                    const wrapper1st = document.getElementById("section-1st-wrapper");
+                    const wrapper2nd = document.getElementById("section-2nd-wrapper");
+
+                    if (inputName.startsWith("1s_")) {
+                        document.getElementById("user-role-badge").textContent = `تلميذ - سنة أولى (${inputName})`;
+                        wrapper1st.style.display = "block";
+                        wrapper2nd.style.display = "none";
+                    } else if (inputName.startsWith("2s_")) {
+                        document.getElementById("user-role-badge").textContent = `تلميذ - سنة ثانية (${inputName})`;
+                        wrapper1st.style.display = "none";
+                        wrapper2nd.style.display = "block";
+                    }
+
+                    renderAll();
+                } else {
+                    errorDiv.style.display = "block";
+                }
+            }
+        }
+
+        function logout() {
+            location.reload();
+        }
+
+        function publishContent() {
+            const level = document.getElementById("target-level").value;
+            const category = document.getElementById("target-category").value;
+            const title = document.getElementById("content-title").value.trim();
+            const textContent = document.getElementById("content-text").value.trim();
+            const fileInput = document.getElementById("content-file");
+            
+            if (title === "") {
+                alert("الرجاء كتابة عنوان المحتوى!");
+                return;
+            }
+
+            if (fileInput.files.length > 0) {
+                const file = fileInput.files[0];
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    saveItemToStorage(level, category, title, textContent, file.name, e.target.result, file.type);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                saveItemToStorage(level, category, title, textContent, null, null, null);
+            }
+        }
+
+        function saveItemToStorage(level, category, title, textContent, fileName, fileData, fileType) {
+            let newItem = {
+                id: Date.now(),
+                level: level,
+                category: category,
+                title: title,
+                text: textContent,
+                fileName: fileName,
+                fileData: fileData,
+                fileType: fileType
+            };
+
+            savedContent.unshift(newItem);
+            localStorage.setItem("hamdaoui_content", JSON.stringify(savedContent));
+
+            renderAll();
+
+            document.getElementById("content-title").value = "";
+            document.getElementById("content-text").value = "";
+            document.getElementById("content-file").value = "";
+            
+            alert("تم نشر وحفظ المحتوى بنجاح!");
+        }
+
+        function deleteContent(id) {
+            if(confirm("هل أنت متأكد من حذف هذا المحتوى؟")) {
+                savedContent = savedContent.filter(item => item.id !== id);
+                localStorage.setItem("hamdaoui_content", JSON.stringify(savedContent));
+                renderAll();
+            }
+        }
+
+        function toggleAccordion(id) {
+            const body = document.getElementById("body-" + id);
+            if (body.style.display === "block") {
+                body.style.display = "none";
+            } else {
+                body.style.display = "block";
+            }
+        }
+
+        function renderCategoryContent(level, category, containerId) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = "";
+
+            const filtered = savedContent.filter(item => item.level === level && item.category === category);
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<p style="color:#94a3b8; font-size:0.9rem; margin:0; text-align:center; padding: 0.5rem;">لا يوجد محتوى منشور هنا حالياً.</p>`;
+                return;
+            }
+
+            filtered.forEach(item => {
+                const itemWrapper = document.createElement("div");
+                itemWrapper.className = "accordion-item";
+                
+                let html = `
+                    <div class="accordion-header" onclick="toggleAccordion(${item.id})">
+                        <span>📌 ${item.title}</span>
+                        <span style="font-size: 0.8rem; background: #e0f2fe; color: #0284c7; padding: 2px 8px; border-radius: 4px;">اضغط للعرض 🔽</span>
+                    </div>
+                    <div class="accordion-body" id="body-${item.id}">
+                `;
+
+                if (item.text) {
+                    html += `<p style="white-space: pre-wrap; margin-top: 0; font-size: 0.95rem;">${item.text}</p>`;
+                }
+
+                if (item.fileName && item.fileData) {
+                    // التحقق مما إذا كان الملف المرفوع فيديو
+                    if (item.fileType && item.fileType.startsWith("video")) {
+                        html += `<p style="margin: 0.5rem 0; font-size: 0.85rem;">🎬 الفيديو التجريبي: <strong>${item.fileName}</strong></p>
+                                 <video controls>
+                                     <source src="${item.fileData}" type="${item.fileType}">
+                                     متصفحك لا يدعم عرض الفيديو.
+                                 </video>
+                                 <br>
+                                 <a href="${item.fileData}" download="${item.fileName}" class="action-btn">📥 تحميل الفيديو على الجهاز</a>`;
+                    } else {
+                        // ملف عادي (PDF أو صورة)
+                        html += `<p style="margin: 0.5rem 0; font-size: 0.85rem;">📁 الملف المرفق: <strong>${item.fileName}</strong></p>
+                                 <a href="${item.fileData}" download="${item.fileName}" class="action-btn">📥 تحميل الملف (PDF أو صورة)</a>`;
+                    }
+                }
+
+                if (currentLoggedInUser && currentLoggedInUser.type === "admin") {
+                    html += `<div style="margin-top: 15px; text-align: left; border-top: 1px dashed #cbd5e1; padding-top: 10px;"><button class="delete-btn" onclick="deleteContent(${item.id})">حذف هذا المحتوى نهائياً</button></div>`;
+                }
+
+                html += `</div>`;
+                itemWrapper.innerHTML = html;
+                container.appendChild(itemWrapper);
+            });
+        }
+
+        function renderAll() {
+            renderCategoryContent("1st", "lessons", "content-1st-lessons");
+            renderCategoryContent("1st", "exercises", "content-1st-exercises");
+            renderCategoryContent("1st", "lab", "content-1st-lab");
+            renderCategoryContent("1st", "homework", "content-1st-homework");
+
+            renderCategoryContent("2nd", "lessons", "content-2nd-lessons");
+            renderCategoryContent("2nd", "exercises", "content-2nd-exercises");
+            renderCategoryContent("2nd", "lab", "content-2nd-lab");
+            renderCategoryContent("2nd", "homework", "content-2nd-homework");
+        }
+    </script>
+</body>
+</html>
+
+    <script src="/script.js"></script>
+  </body>
+
+</html>
